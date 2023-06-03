@@ -1,0 +1,38 @@
+body {
+    background-color: #151212;
+    color: aliceblue;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#conteiner-head > #title, .result, .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#game {
+    border: 2px;
+    border-color: blueviolet;
+    width: 40px;
+    height: 200px;
+    margin: 0%;
+}
+
+.table-container {
+    display: inline-block;
+    margin: 10px;
+    text-align: center;
+    color: white;
+}
+
+.table-container table {
+    border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+    border: 1px solid white;
+    padding: 5px;
+}
