@@ -1,0 +1,154 @@
+/* Importação da fonte do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500&display=swap');
+
+/* Reset de estilos padrão e definição da fonte */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* Estilos gerais do body */
+body {
+    height: 100vh;
+    background-color: #f1f1f1;
+    color: #333333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Gradiente animado que simula as horas do dia */
+body {
+    background: linear-gradient(135deg, #FFD700, #87CEEB, #FFA500, #01016f);
+    background-size: 400% 400%;
+    animation: gradientAnimation 25s ease infinite;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    25% {
+        background-position: 100% 50%;
+    }
+    50% {
+        background-position: 0% 50%;
+    }
+    75% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Estilos para os botões */
+.button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.button button {
+    margin: 5px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #e6e6e6;
+    color: #333333;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button button:hover {
+    background-color: #cccccc;
+}
+
+/* Estilos para o cabeçalho */
+#container-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Estilos para o input */
+.container-input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-input input {
+    margin: 5px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #e6e6e6;
+    color: #333333;
+    border: none;
+    text-align: center;
+}
+
+.container-input input:focus {
+    outline: none;
+    box-shadow: 0 0 5px #999999;
+}
+
+/* Estilos para o contêiner do jogo */
+#container-gamenumber {
+    backdrop-filter: blur(50%);
+}
+
+#container-game {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Estilos para as tabelas */
+.table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    text-align: center;
+    color: #333333;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.table-container table {
+    border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+    border: 1px solid;
+    padding: 5px;
+}
+
+/* Estilos para a tabela do resultado */
+.table-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 558.9;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .table-container {
+      max-width: 100%;
+    }
+  }
+  

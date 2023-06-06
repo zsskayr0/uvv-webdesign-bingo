@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mk0.css">
+    <title>Bingo</title>
+</head>
+<body>
+    <div id="container-head">
+        <h1 id="title">Bingo</h1>
+        <div class="button">
+            <button onclick="generateNumbers()">Iniciar</button>
+            <button onclick="createTable()">Criar Cartela</button>
+        </div>
+    </div>
+    <div class="container-input">
+        <input type="text" id="N1">
+        <input type="text" id="N2">
+        <input type="text" id="N3">
+    </div>
+    <div id="container-gamenumber">
+        <div id="container-game"></div>
+        <div id="numbers-table" class="table-container"></div>
+        <p id="winner-message" class="winner-message"></p>
+    </div>
+    <div class="container-players">
+        <div id="player1-table" class="table-container"></div>
+        <div id="player2-table" class="table-container"></div>
+        <div id="player3-table" class="table-container"></div>
+    </div>
+    
+    <script src="mk0.js"></script>
+</body>
+</html>
