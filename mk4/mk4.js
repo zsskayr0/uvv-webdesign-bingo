@@ -1,10 +1,10 @@
-// Array para armazenar os jogadores
+// Array to store the players
 let players = [];
 
-// Função para adicionar um jogador à lista e criar a tabela
+// Function to add a player to the list and create the table
 function addPlayer() {
   const playerNameInput = document.getElementById("playername");
-  const playerName = playerNameInput.value;
+  const playerName = playerNameInput.value.trim();
 
   if (playerName !== "") {
     players.push(playerName);
@@ -14,7 +14,7 @@ function addPlayer() {
   }
 }
 
-// Evento de tecla para adicionar jogador ao pressionar Enter
+// Event listener to add a player when Enter key is pressed
 const playerNameInput = document.getElementById("playername");
 playerNameInput.addEventListener("keyup", function(event) {
   if (event.keyCode === 13) {
@@ -23,7 +23,7 @@ playerNameInput.addEventListener("keyup", function(event) {
   }
 });
 
-// Função para criar a tabela de jogadores
+// Function to create the player table
 function createTable() {
   const containerGame = document.getElementById("container-game");
   containerGame.innerHTML = "";
@@ -36,6 +36,8 @@ function createTable() {
     playerNameHeader.textContent = player;
 
     const table = document.createElement("table");
+
+    // Generate random numbers for each player's card
     for (let i = 0; i < 5; i++) {
       const row = document.createElement("tr");
 
@@ -44,6 +46,7 @@ function createTable() {
         const randomNumber = Math.floor(Math.random() * 75) + 1;
         const number = formatNumber(randomNumber);
         cell.textContent = number;
+
         row.appendChild(cell);
       }
 
@@ -56,19 +59,15 @@ function createTable() {
   });
 }
 
-// Função para formatar o número adicionando um zero na frente, se for menor que 10
+// Function to format the number by adding a leading zero if it's less than 10
 function formatNumber(number) {
   return number < 10 ? "0" + number : number.toString();
 }
 
-function GameStart() {
+// Function to generate the game table with random numbers
+function generateGameTable() {
   const numbersTable = document.getElementById("numbers-table");
   numbersTable.innerHTML = "";
-
-  const numbers = [];
-  for (let i = 1; i <= 75; i++) {
-    numbers.push(i);
-  }
 
   const divContainer = document.createElement("div");
   divContainer.classList.add("game-container");
@@ -76,19 +75,89 @@ function GameStart() {
   const table = document.createElement("table");
   table.classList.add("game-table");
 
-  for (let i = 0; i < 3; i++) {
-    const row = document.createElement("tr");
-    for (let j = 0; j < 25; j++) {
-      const cell = document.createElement("td");
-      const index = Math.floor(Math.random() * numbers.length);
-      const number = formatNumber(numbers[index]);
-      cell.textContent = number;
-      numbers.splice(index, 1);
-      row.appendChild(cell);
-    }
-    table.appendChild(row);
+  const numbers = [];
+  for (let i = 1; i <= 75; i++) {
+    numbers.push(i);
   }
+
+  const row = document.createElement("tr");
+  table.appendChild(row);
+
+  const intervalId = setInterval(() => {
+    if (numbers.length === 0 || isAnyRowFullyMarked()) {
+      clearInterval(intervalId);
+      return;
+    }
+
+// os números não estão criando uma nova linha após 25 células
+
+    if (numbers.length === 25) {
+      const newRow = document.createElement("tr");
+      table.appendChild(newRow);
+      row = newRow;
+    }
+    
+    const cell = document.createElement("td");
+    const index = Math.floor(Math.random() * numbers.length);
+    const number = formatNumber(numbers[index]);
+    cell.textContent = number;
+    numbers.splice(index, 1);
+
+    row.appendChild(cell);
+
+    // Check if any player's table has the current number and mark it
+    players.forEach(player => {
+      const playerTable = document.getElementById(player);
+      if (playerTable && playerTable.classList.contains("player-table")) {
+        const cells = playerTable.getElementsByTagName("td");
+        for (let i = 0; i < cells.length; i++) {
+          if (cells[i].textContent === number) {
+            cells[i].classList.add("marked");
+          }
+        }
+      }
+    });
+
+    if (row.children.length === 5) {
+      const newRow = document.createElement("tr");
+      table.appendChild(newRow);
+      row = newRow;
+    }
+  }, 100);
 
   divContainer.appendChild(table);
   numbersTable.appendChild(divContainer);
+}
+
+// Function to check if any player's table has a fully marked row
+function isAnyRowFullyMarked() {
+  let isFullyMarked = false;
+
+  players.forEach(player => {
+    const playerTable = document.getElementById(player);
+    if (playerTable && playerTable.classList.contains("player-table")) {
+      const rows = playerTable.getElementsByTagName("tr");
+      for (let i = 0; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName("td");
+        let isRowFullyMarked = true;
+        for (let j = 0; j < cells.length; j++) {
+          if (!cells[j].classList.contains("marked")) {
+            isRowFullyMarked = false;
+            break;
+          }
+        }
+        if (isRowFullyMarked) {
+          isFullyMarked = true;
+          break;
+        }
+      }
+    }
+  });
+
+  return isFullyMarked;
+}
+
+// Function to start the game
+function GameStart() {
+  generateGameTable();
 }

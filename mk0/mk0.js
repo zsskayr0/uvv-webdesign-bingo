@@ -102,3 +102,4 @@ function generateNumbers() {
     var containerGamenumber = document.getElementById("container-gamenumber");
     containerGamenumber.classList.add("show");
 }
+

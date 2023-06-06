@@ -174,10 +174,12 @@ body {
   }
   
   .table-container h3 {
+    margin: 0;
     margin-bottom: 10px;
   }
   
   .table-container table {
+    margin-top: 5px;
     border-collapse: collapse;
   }
   
@@ -185,6 +187,11 @@ body {
   .table-container td {
     border: 1px solid;
     padding: 5px;
+  }
+
+  .table-container td {
+    text-align: center;
+    border: 1px solid #b0b0b0;
   }
   
   
@@ -200,9 +207,8 @@ body {
     color: #333333;
     background-color: #e6e6e6;
     border-radius: 10px;
-    padding: 10px;
+    padding: 15px;
   }
-  
 
 
 .game-table {
@@ -210,13 +216,20 @@ body {
     table-layout: fixed;
     width: 100%;
     border-collapse: collapse;
-    text-align: center;
-    justify-content: center;
     border-radius: 10px;
-    padding: 10px;
+    padding: 20px;
   }
 
   .game-container td {
     border: 1px solid #333333;
+    padding: 3px;
+    text-align: center;
+    border: 1px solid #b0b0b0;
+  }
+
+  /* Estilos para números marcados na cartela */
+.marked {
+    text-decoration: line-through;
+    background-color:#b2b2b2;
   }
   

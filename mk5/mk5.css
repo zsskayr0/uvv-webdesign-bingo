@@ -1,14 +1,14 @@
-/* Importação da fonte do Google Fonts */
+/* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500&display=swap');
 
-/* Reset de estilos padrão e definição da fonte */
+/* Reset default styles and set the font */
 * {
     margin: 0;
     padding: 0;
     font-family: 'Open Sans', sans-serif;
 }
 
-/* Estilos gerais do body */
+/* General styles for the body */
 body {
     height: 100vh;
     background-color: #f1f1f1;
@@ -19,7 +19,7 @@ body {
     justify-content: center;
 }
 
-/* Gradiente animado que simula as horas do dia */
+/* Animated gradient background */
 body {
     background: linear-gradient(135deg, #ffe345, #79ccea, #fab535, #01016f);
     background-size: 400% 400%;
@@ -44,8 +44,8 @@ body {
     }
 }
 
-/* Estilos para os botões */
-.container-button {
+/* Button styles */
+.button-container {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -53,7 +53,7 @@ body {
     margin-bottom: 10px;
 }
 
-.container-button button {
+.button-container button {
     margin: 5px;
     padding: 10px;
     border-radius: 10px;
@@ -64,19 +64,19 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.container-button button:hover {
+.button-container button:hover {
     background-color: #cccccc;
 }
 
-/* Estilos para o cabeçalho */
-.container-header {
+/* Header styles */
+#header-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-#container-title {
+#title-container {
     text-align: center;
     margin-bottom: 20px;
 }
@@ -90,15 +90,15 @@ body {
     font-size: 20px;
 }
 
-/* Estilos para o input */
-.container-input {
+/* Input styles */
+.input-container {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
 }
 
-.container-input input {
+.input-container input {
     margin: 5px;
     padding: 10px;
     border-radius: 10px;
@@ -108,12 +108,12 @@ body {
     text-align: center;
 }
 
-.container-input input:focus {
+.input-container input:focus {
     outline: none;
     box-shadow: 0 0 5px #999999;
 }
 
-.container-input button {
+.input-container button {
     margin: 5px;
     padding: 10px;
     border-radius: 10px;
@@ -124,19 +124,21 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.container-input button:hover {
+.input-container button:hover {
     background-color: #cccccc;
 }
 
-/* Estilos para o contêiner do jogo */
-#container-game {
+/* Game container styles */
+#game-container {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
 }
 
-/* Estilos para as tabelas */
-.table-container {
+/* Player container styles */
+.player-container {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     margin: 12px;
@@ -146,29 +148,84 @@ body {
     border-radius: 10px;
     padding: 10px;
     max-width: 518.9px;
-  }
-  
+    flex-basis: 80%;
+}
 
-  
-  .table-container th,
-  .table-container td {
-    border: 1px solid;
-    padding: 5px;
-  }
-  
+/* Set max width for player containers */
+@media screen and (max-width: 518.9px) {
+    .player-container {
+        flex-basis: 100%;
+    }
+}
 
-/* Estilos para a tabela do resultado */
-.result-box {
+/* Table container styles */
+.table-container {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+    margin: 12px;
+    text-align: center;
+    color: #333333;
+    background-color: #e6e6e6;
+    border-radius: 10px;
+    padding: 10px;
     max-width: 518.9px;
 }
 
-.centered-table {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+.table-container h3 {
+    margin: 0;
+    margin-bottom: 10px;
 }
 
+.table-container table {
+    margin-top: 5px;
+    border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+    border: 1px solid;
+    padding: 5px;
+}
+
+.table-container td {
+    text-align: center;
+    border: 1px solid #b0b0b0;
+}
+
+/* Game table styles */
+.game-container {
+    display: flex;
+    width: 100%;
+    border-collapse: collapse;
+    max-width: 518.9px;
+    margin: 12px;
+    text-align: center;
+    color: #333333;
+    background-color: #e6e6e6;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.game-table {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.game-container td {
+    border: 1px solid #333333;
+    padding: 3px;
+    text-align: center;
+    border: 1px solid #b0b0b0;
+}
+
+/* Marked number styles */
+.marked {
+    text-decoration: line-through;
+    background-color: #b2b2b2;
+}

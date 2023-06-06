@@ -14,6 +14,7 @@ function addPlayer() {
   }
 }
 
+
 // Função para criar a tabela de jogadores
 function createTable() {
   const containerPlayerTable = document.getElementById("container-player-table");
