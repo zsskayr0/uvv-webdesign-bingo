@@ -1,0 +1,15 @@
+body {
+    display: flex;
+    justify-content: center;
+}
+
+.container-input {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 160px;
+}
+
+::placeholder {
+    text-align: center;
+}

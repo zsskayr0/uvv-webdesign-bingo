@@ -3,72 +3,127 @@ let players = [];
 
 // Function to add a player to the list and create the table
 function addPlayer() {
-  const playerNameInput = document.getElementById("player-name");
-  const playerName = playerNameInput.value;
-  
+  const playerNameInput = document.getElementById("playername");
+  const playerName = playerNameInput.value.trim();
+
   if (playerName !== "") {
     players.push(playerName);
     playerNameInput.value = "";
-
-    updateTable();
+    playerNameInput.focus();
+    createTable();
   }
+}
+
+// Event listener to add a player when Enter key is pressed
+const playerNameInput = document.getElementById("playername");
+playerNameInput.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    addPlayer();
+  }
+});
+
+// Function to create the player table
+function createTable() {
+  const containerGame = document.getElementById("container-game");
+  containerGame.innerHTML = "";
+
+  players.forEach(player => {
+    const playerDiv = document.createElement("div");
+    playerDiv.classList.add("table-container");
+
+    const playerNameHeader = document.createElement("h3");
+    playerNameHeader.textContent = player;
+
+    const table = document.createElement("table");
+
+    // Generate random numbers for each player's card
+    for (let i = 0; i < 5; i++) {
+      const row = document.createElement("tr");
+
+      for (let j = 0; j < 5; j++) {
+        const cell = document.createElement("td");
+        const randomNumber = Math.floor(Math.random() * 75) + 1;
+        const number = formatNumber(randomNumber);
+        cell.textContent = number;
+
+        row.appendChild(cell);
+      }
+
+      table.appendChild(row);
+    }
+
+    playerDiv.appendChild(playerNameHeader);
+    playerDiv.appendChild(table);
+    containerGame.appendChild(playerDiv);
+  });
+}
+
+// Function to format the number by adding a leading zero if it's less than 10
+function formatNumber(number) {
+  return number < 10 ? "0" + number : number.toString();
+}
+
+function generateGameTable() {
+  const numbersTable = document.getElementById("numbers-table");
+  numbersTable.innerHTML = "";
+
+  const divContainer = document.createElement("div");
+  divContainer.classList.add("game-container");
+
+  const table = document.createElement("table");
+  table.classList.add("game-table");
+
+  const numbers = gerarNumerosAleatorios(75, 1, 75);
+
+  const row = document.createElement("tr");
+  table.appendChild(row);
+
+  const intervalId = setInterval(() => {
+    if (numbers.length === 0 || isAnyRowFullyMarked()) {
+      clearInterval(intervalId);
+      return;
+    }
+
+    if (numbers.length === 25) {
+      const newRow = document.createElement("tr");
+      table.appendChild(newRow);
+      row = newRow;
+    }
+    
+    const cell = document.createElement("td");
+    const index = Math.floor(Math.random() * numbers.length);
+    const number = formatNumber(numbers[index]);
+    cell.textContent = number;
+    numbers.splice(index, 1);
+
+    row.appendChild(cell);
+
+    // Check if any player's table has the current number and mark it
+    players.forEach(player => {
+      const playerTable = document.getElementById(player);
+      if (playerTable && playerTable.classList.contains("player-table")) {
+        const cells = playerTable.getElementsByTagName("td");
+        for (let i = 0; i < cells.length; i++) {
+          if (cells[i].textContent === number) {
+            cells[i].classList.add("marked");
+          }
+        }
+      }
+    });
+
+    if (row.children.length === 5) {
+      const newRow = document.createElement("tr");
+      table.appendChild(newRow);
+      row = newRow;
+    }
+  }, 100);
+
+  divContainer.appendChild(table);
+  numbersTable.appendChild(divContainer);
 }
 
 // Function to start the game
-function startGame() {
-  const tableContainer = document.getElementById("table-container");
-  tableContainer.innerHTML = "";
-  
-  const gameContainer = document.getElementById("game-container");
-  gameContainer.innerHTML = "";
-  
-  // Shuffle the players array
-  players = shuffleArray(players);
-  
-  // Create the game table
-  const gameTable = document.createElement("table");
-  gameTable.className = "game-table";
-  
-  // Add a row for each player
-  players.forEach(player => {
-    const row = document.createElement("tr");
-    const cell = document.createElement("td");
-    cell.textContent = player;
-    row.appendChild(cell);
-    gameTable.appendChild(row);
-  });
-  
-  // Append the game table to the container
-  gameContainer.appendChild(gameTable);
-}
-
-// Function to update the players table
-function updateTable() {
-  const tableContainer = document.getElementById("table-container");
-  tableContainer.innerHTML = "";
-  
-  // Create the table
-  const table = document.createElement("table");
-  table.className = "player-table";
-  
-  // Add a row for each player
-  players.forEach(player => {
-    const row = document.createElement("tr");
-    const cell = document.createElement("td");
-    cell.textContent = player;
-    row.appendChild(cell);
-    table.appendChild(row);
-  });
-  
-  // Append the table to the container
-  tableContainer.appendChild(table);
-}
-
-// Function to shuffle an array using the Fisher-Yates algorithm
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
+function GameStart() {
+  generateGameTable();
 }

@@ -21,7 +21,7 @@ body {
 
 /* Gradiente animado que simula as horas do dia */
 body {
-    background: linear-gradient(135deg, #ffe345, #79ccea, #fab535, #01016f);
+    background: linear-gradient(120deg, #53879f, #76b2ce, #9ed4fb, #c8e6ff, #ff2525);
     background-size: 400% 400%;
     animation: gradientAnimation 30s ease infinite;
 }
@@ -231,5 +231,27 @@ body {
 .marked {
     text-decoration: line-through;
     background-color:#b2b2b2;
+  }
+
+/* Estilos para a mensagem do jogador */
+.message-container {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #e6e6e6;
+    color: #333333;
+    border-radius: 10px;
+    padding: 10px;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+  
+  .message-container.show {
+    opacity: 1;
+  }
+  
+  .bingo-letter {
+    font-weight: bold;
   }
   
