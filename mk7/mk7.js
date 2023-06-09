@@ -112,3 +112,64 @@ let playerAddedMessageTimer = null;
 function formatNumber(number) {
   return number < 10 ? "0" + number : number.toString();
 }
+
+// Function to generate the game table with random numbers
+function generateGameTable() {
+  const numbersTable = document.getElementById("numbers-table");
+  numbersTable.innerHTML = "";
+
+  const divContainer = document.createElement("div");
+  divContainer.classList.add("game-container");
+
+  const table = document.createElement("table");
+  table.classList.add("game-table");
+
+  const numbers = [];
+  for (let i = 1; i <= 73; i++) {
+    numbers.push(i);
+  }
+
+  const intervalId = setInterval(() => {
+    if (numbers.length === 0 || isAnyRowFullyMarked()) {
+      clearInterval(intervalId);
+      return;
+    }
+
+    const cell = document.createElement("td");
+    const index = Math.floor(Math.random() * numbers.length);
+    const number = formatNumber(numbers[index]);
+    cell.textContent = number;
+    numbers.splice(index, 1);
+
+    const rows = table.getElementsByTagName("tr");
+    let currentRow = rows[rows.length - 1];
+
+    if (!currentRow) {
+      currentRow = document.createElement("tr");
+      table.appendChild(currentRow);
+    }
+
+    if (currentRow.children.length === 5) {
+      currentRow = document.createElement("tr");
+      table.appendChild(currentRow);
+    }
+
+    currentRow.appendChild(cell);
+
+    // Check if any player's table has the current number and mark it
+    players.forEach(player => {
+      const playerTable = document.getElementById(player.playerName);
+      if (playerTable && playerTable.classList.contains("player-table")) {
+        const cells = playerTable.getElementsByTagName("td");
+        for (let i = 0; i < cells.length; i++) {
+          if (cells[i].textContent === number) {
+            cells[i].classList.add("marked");
+          }
+        }
+      }
+    });
+  }, 100);
+
+  divContainer.appendChild(table);
+  numbersTable.appendChild(divContainer);
+}
