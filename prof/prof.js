@@ -31,7 +31,7 @@ function gerarCartela(){
         cartela: cartela
     });
 
-    desenharCartela(nomeJogador, cartela);
+    desenharCartela(nomeJogador, cartela); 
 
     console.log(jogadores)
 }

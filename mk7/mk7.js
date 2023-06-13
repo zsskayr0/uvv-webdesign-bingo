@@ -38,7 +38,7 @@ function showMessage(message) {
     setTimeout(function() {
       messageContainer.remove();
     }, 300);
-  }, 3000);
+  }, 2300);
 }
 
 
