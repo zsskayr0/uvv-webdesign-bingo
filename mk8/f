@@ -9,9 +9,7 @@ function addPlayer() {
   if (playerName !== "") {
     const player = {
       playerName: playerName,
-      isWinner: false
     };
-    
 
     players.push(player);
     playerNameInput.value = "";
@@ -19,7 +17,6 @@ function addPlayer() {
     createTable();
     showMessage("Player added");
     console.log(players);
-
   } else {
     alert("Please insert a name");
   }
@@ -82,15 +79,6 @@ function createTable() {
     });
     table.appendChild(headerRow);
 
-    // Array to store the column ranges
-    const columnRanges = [
-      { min: 1, max: 15 },
-      { min: 16, max: 30 },
-      { min: 31, max: 45 },
-      { min: 46, max: 60 },
-      { min: 61, max: 75 }
-    ];
-
     // Generate random numbers for each column of the table
     for (let columnIndex = 0; columnIndex < 5; columnIndex++) {
       const column = document.createElement("tr");
@@ -98,8 +86,8 @@ function createTable() {
       // Generate random numbers for each row of the column
       for (let rowIndex = 0; rowIndex < 5; rowIndex++) {
         const cell = document.createElement("td");
-        const minNumber = columnRanges[columnIndex].min;
-        const maxNumber = columnRanges[columnIndex].max;
+        const minNumber = getColumnMinNumber(columnIndex);
+        const maxNumber = getColumnMaxNumber(columnIndex);
         const randomNumber = generateUniqueRandomNumber(minNumber, maxNumber, table);
         const number = formatNumber(randomNumber);
         cell.textContent = number;
@@ -117,28 +105,12 @@ function createTable() {
 
 // Function to get the minimum number for a column
 function getColumnMinNumber(columnIndex) {
-  const columnRanges = [
-    { min: 1, max: 15 },
-    { min: 16, max: 30 },
-    { min: 31, max: 45 },
-    { min: 46, max: 60 },
-    { min: 61, max: 75 }
-  ];
-
-  return columnRanges[columnIndex].min;
+  return columnIndex * 15 + 1;
 }
 
 // Function to get the maximum number for a column
 function getColumnMaxNumber(columnIndex) {
-  const columnRanges = [
-    { min: 1, max: 15 },
-    { min: 16, max: 30 },
-    { min: 31, max: 45 },
-    { min: 46, max: 60 },
-    { min: 61, max: 75 }
-  ];
-
-  return columnRanges[columnIndex].max;
+  return (columnIndex + 1) * 15;
 }
 
 // Function to generate a unique random number between min and max
@@ -227,12 +199,6 @@ function generateGameTable() {
     });
   }, 100);
 
-if (numbers.length === 0 || isAnyRowFullyMarked()) {
-  clearInterval(intervalId);
-  checkWinners(); // Verificar os vencedores após cada marcação de número
-  return;
-}
-
   gameContainer.appendChild(table);
   numbersTable.appendChild(gameContainer);
 }
@@ -263,35 +229,8 @@ function isAnyRowFullyMarked() {
   return fullyMarkedRows.length > 0;
 }
 
-function checkWinners() {
-  players.forEach((player) => {
-    const playerTable = document.getElementById(player.playerName);
-    if (playerTable && playerTable.classList.contains("player-table")) {
-      const rows = playerTable.getElementsByTagName("tr");
-      let isPlayerWinner = true;
-      for (let i = 1; i < rows.length; i++) {
-        const cells = rows[i].getElementsByTagName("td");
-        for (let j = 0; j < cells.length; j++) {
-          if (!cells[j].classList.contains("marked")) {
-            isPlayerWinner = false;
-            break;
-          }
-        }
-        if (!isPlayerWinner) {
-          break;
-        }
-      }
-      player.isWinner = isPlayerWinner;
-      if (isPlayerWinner) {
-        playerTable.classList.add("winner");
-      } else {
-        playerTable.classList.remove("winner");
-      }
-    }
-  });
-}
-
 // Function to start the game
 function startGame() {
   generateGameTable();
+
 }

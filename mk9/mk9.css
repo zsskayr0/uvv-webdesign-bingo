@@ -230,9 +230,14 @@ body {
   /* Estilos para números marcados na cartela */
 .marked {
     text-decoration: line-through;
-    background-color:#b2b2b2;
+    background-color:#dddddd;
   }
-
+  
+  .fully-marked {
+    font-weight: bold;
+    color: rgb(132, 128, 11);
+  }
+  
 /* Estilos para a mensagem do jogador */
 .message-container {
     position: absolute;
@@ -255,3 +260,6 @@ body {
     font-weight: bold;
   }
   
+  .winner {
+    background-color: #ff2525;
+  }

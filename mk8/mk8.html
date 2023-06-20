@@ -8,11 +8,21 @@
     <title>Bingo</title>
 </head>
 <body>
+    <div id="container-header">
+        <div id="container-title">
+            <h1 id="title">Jogo do Bingo</h1>
+            <h2 id="subtitle">by Diogo M. Roque</h2>
+        </div>
+        <div class="container-button">
+            <button onclick="startGame()" id="start-button">Iniciar o Jogo</button>
+            <button onclick="addPlayer()">Adicionar Jogador</button>
+        </div>
+    </div>
     <div class="container-input">
-        <button onclick="addPlayer()">Adicionar Jogador</button>
-        <button onclick="GameStart()" id="start-button">Iniciar o Jogo</button>
         <input type="text" id="playername" placeholder="Digite o nome do jogador">
     </div>
+    <div id="container-game"></div>
+    <div id="numbers-table"></div>
     <script src="mk8.js"></script>
 </body>
 </html>
