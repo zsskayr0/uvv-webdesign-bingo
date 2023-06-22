@@ -56,7 +56,24 @@ function seeWinner(message) {
   setTimeout(function () {
     messageContainer.style.opacity = "1";
   }, 100);
+
+  // Adicionar o botão de reiniciar
+  const resetContainer = document.getElementById("resetContainer");
+  resetContainer.innerHTML = ''; // Limpar o conteúdo existente
+
+  const resetButton = document.createElement("button");
+  resetButton.textContent = "Tentar Novamente";
+  resetButton.id = "resetButton";
+  resetButton.onclick = resetGame;
+
+  const resetButtonContainer = document.createElement("div");
+  resetButtonContainer.classList.add("container-button");
+  resetButtonContainer.appendChild(resetButton);
+
+  resetContainer.appendChild(resetButtonContainer);
 }
+
+
 
 // Event listener to add a player when Enter key is pressed
 const playerNameInput = document.getElementById("playername");
@@ -307,5 +324,37 @@ function checkWinners() {
 
 // Function to start the game
 function startGame() {
+  if (players.length === 0) {
+    showMessage("Adicione ao menos um jogador");
+    return;
+  }
+
   generateGameTable();
+}
+
+function resetGame() {
+  // Limpar a lista de jogadores
+  players = [];
+
+  // Limpar a tabela de jogadores
+  const containerGame = document.getElementById("container-game");
+  containerGame.innerHTML = "";
+
+  // Limpar a tabela de números sorteados
+  const numbersTable = document.getElementById("numbers-table");
+  numbersTable.innerHTML = "";
+
+  // Remover classes de marcação e vencedor das células da tabela
+  const cells = document.getElementsByTagName("td");
+  for (let i = 0; i < cells.length; i++) {
+    cells[i].classList.remove("marked");
+    cells[i].classList.remove("winner");
+  }
+
+  // Exibir mensagem de jogo reiniciado
+  showMessage("Jogo Reiniciado");
+
+  // Remover o botão de reiniciar
+  const resetContainer = document.getElementById("resetContainer");
+  resetContainer.innerHTML = "";
 }

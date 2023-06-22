@@ -270,3 +270,45 @@ body {
     background-color: #dddddd;
     color: #53879f;
   }
+
+  
+        /* Estilos gerais do body */
+        body {
+            overflow-x: auto; /* Permite a rolagem horizontal */
+        }
+
+        /* Estilos para o contêiner do jogo */
+        #container-game {
+            white-space: nowrap; /* Evita que as tabelas sejam quebradas em várias linhas */
+            overflow: auto; /* Permite a rolagem horizontal dentro do contêiner */
+        }
+
+        /* Estilos para as tabelas */
+        .table-container {
+            flex-shrink: 0; /* Evita que as tabelas sejam reduzidas para caber na tela */
+        }
+
+/* Estilos para o botão de reiniciar */
+#resetButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  #resetButton button {
+    margin: 5px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #e6e6e6;
+    color: #333333;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  #resetButton button:hover {
+    background-color: #cccccc;
+  }
+  
