@@ -7,7 +7,7 @@ Este repositório contém a resolução de um trabalho prático da disciplina de
 
 Para jogar o jogo de Bingo, siga estes passos:
 
-1. clique no link disponível na descrição do respositório. ([Ou clique aqui](https://zsskayr0.github.io/uvv-webdesign-bingo/index/index.html))
+1. Clique no link disponível na descrição do respositório. ([Ou clique aqui](https://zsskayr0.github.io/uvv-webdesign-bingo/index/index.html))
 
 2. Adicione os jogadores clicando no botão "Adicionar Jogador" e inserindo o nome do jogador.
 
