@@ -9,7 +9,8 @@ function addPlayer() {
   if (playerName !== "") {
     const player = {
       playerName: playerName,
-      isWinner: false
+      isWinner: false,
+      table: [] // Array to store the generated numbers for the player's table
     };
 
     players.push(player);
@@ -19,7 +20,7 @@ function addPlayer() {
     showMessage("Jogador Adicionado");
     console.log(players);
   } else {
-    alert("Please insert a name");
+    showMessage("Por Favor insira um Nome Válido");
   }
 }
 
@@ -29,7 +30,7 @@ function showMessage(message) {
   messageContainer.classList.add("message-container");
   messageContainer.textContent = message;
 
-  const containerGame = document.getElementById("container-game");
+  const containerGame = document.getElementById("container-message");
   containerGame.appendChild(messageContainer);
 
   setTimeout(function () {
@@ -49,13 +50,12 @@ function seeWinner(message) {
   messageContainer.classList.add("message-container");
   messageContainer.textContent = message;
 
-  const containerGame = document.getElementById("container-game");
+  const containerGame = document.getElementById("container-message");
   containerGame.appendChild(messageContainer);
 
   setTimeout(function () {
     messageContainer.style.opacity = "1";
   }, 100);
-
 }
 
 // Event listener to add a player when Enter key is pressed
@@ -68,12 +68,11 @@ playerNameInput.addEventListener("keyup", function (event) {
 });
 
 // Function to generate random numbers
-function generateRandomNumbers(quantity, min, max) {
+function generateRandomNumber(quantity, min, max) {
   var numbers = [];
 
   while (numbers.length < quantity) {
-    var random = Math.floor(Math.random() * (max - min)) + min;
-
+    var random = Math.floor(Math.random() * (max - min + 1)) + min;
     if (!numbers.includes(random)) {
       numbers.push(random);
     }
@@ -98,8 +97,18 @@ function createTable() {
     table.id = player.playerName;
     table.classList.add("player-table");
 
+    // Generate the word "BINGO" in the header row
+    const headerRow = document.createElement("tr");
+    const bingoWord = ["B", "I", "N", "G", "O"];
+    bingoWord.forEach((letter) => {
+      const cell = document.createElement("th");
+      cell.textContent = letter;
+      headerRow.appendChild(cell);
+    });
+    table.appendChild(headerRow);
+
     // Array to store the column ranges
-    const columnRanges = [
+    const columnRange = [
       { min: 1, max: 15 },
       { min: 16, max: 30 },
       { min: 31, max: 45 },
@@ -107,23 +116,24 @@ function createTable() {
       { min: 61, max: 75 },
     ];
 
+    // Array to store the generated numbers for each column
+    const columnNumbers = [];
+
     // Generate random numbers for each column of the table
     for (let columnIndex = 0; columnIndex < 5; columnIndex++) {
       const column = document.createElement("tr");
 
       // Generate random numbers for each row of the column
-      const columnNumbers = generateRandomNumbers(
-        5,
-        columnRanges[columnIndex].min,
-        columnRanges[columnIndex].max
-      );
+      const columnNumber = generateUniqueRandomNumbers(5, columnRange[columnIndex].min, columnRange[columnIndex].max, columnNumbers);
+      columnNumbers.push(...columnNumber);
+
       for (let rowIndex = 0; rowIndex < 5; rowIndex++) {
         const cell = document.createElement("td");
         if (columnIndex === 2 && rowIndex === 2) {
           cell.textContent = " ";
           cell.classList.add("marked");
         } else {
-          const number = formatNumber(columnNumbers[rowIndex]);
+          const number = formatNumber(columnNumber[rowIndex]);
           cell.textContent = number;
         }
 
@@ -138,56 +148,53 @@ function createTable() {
   });
 }
 
+// Function to generate unique random numbers within a range
+function generateUniqueRandomNumbers(quantity, min, max, existingNumbers) {
+  const numbers = [];
 
+  while (numbers.length < quantity) {
+    const random = Math.floor(Math.random() * (max - min + 1)) + min;
 
-// Function to get the minimum number for a column
-function getColumnMinNumber(columnIndex) {
-  const columnRanges = [
-    { min: 1, max: 15 },
-    { min: 16, max: 30 },
-    { min: 31, max: 45 },
-    { min: 46, max: 60 },
-    { min: 61, max: 75 }
-  ];
-
-  return columnRanges[columnIndex].min;
-}
-
-// Function to get the maximum number for a column
-function getColumnMaxNumber(columnIndex) {
-  const columnRanges = [
-    { min: 1, max: 15 },
-    { min: 16, max: 30 },
-    { min: 31, max: 45 },
-    { min: 46, max: 60 },
-    { min: 61, max: 75 }
-  ];
-
-  return columnRanges[columnIndex].max;
-}
-
-// Function to generate a unique random number between min and max
-function generateUniqueRandomNumber(min, max, table) {
-  let randomNumber;
-
-  do {
-    randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-  } while (isNumberAlreadyUsed(randomNumber, table));
-
-  return randomNumber;
-}
-
-// Function to check if a number is already used in the table
-function isNumberAlreadyUsed(number, table) {
-  const cells = table.getElementsByTagName("td");
-
-  for (let i = 0; i < cells.length; i++) {
-    if (cells[i].textContent === number.toString()) {
-      return true;
+    if (!existingNumbers.includes(random) && !numbers.includes(random)) {
+      numbers.push(random);
     }
   }
 
-  return false;
+  return numbers;
+}
+
+
+// Function to generate unique random numbers within a range
+function generateUniqueRandomNumbers(quantity, min, max, existingNumbers) {
+  const numbers = [];
+
+  while (numbers.length < quantity) {
+    const random = Math.floor(Math.random() * (max - min + 1)) + min;
+
+    if (!numbers.includes(random) && !existingNumbers.includes(random)) {
+      numbers.push(random);
+      existingNumbers.push(random);
+    }
+  }
+
+  return numbers;
+}
+
+
+// Function to generate unique random numbers for a specific player's table
+function generateUniqueRandomNumbers(quantity, min, max, playerTable) {
+  const numbers = [];
+
+  while (numbers.length < quantity) {
+    const random = Math.floor(Math.random() * (max - min + 1)) + min;
+
+    if (!numbers.includes(random) && !playerTable.includes(random)) {
+      numbers.push(random);
+      playerTable.push(random);
+    }
+  }
+
+  return numbers;
 }
 
 // Function to format the number by adding a leading zero if it's less than 10
@@ -206,43 +213,38 @@ function generateGameTable() {
   const table = document.createElement("table");
   table.classList.add("game-table");
 
-  const numbers = [];
-  for (let i = 1; i <= 73; i++) {
-    numbers.push(i);
+  const gameNumbers = [];
+  for (let i = 1; i <= 75; i++) {
+    gameNumbers.push(i);
   }
 
   const intervalId = setInterval(() => {
-    if (numbers.length === 0 || isAnyPlayerFullyMarked()) {
+    if (gameNumbers.length === 0 || isAnyPlayerFullyMarked()) {
       clearInterval(intervalId);
-      checkWinners(); // Verificar os vencedores após cada marcação de número
-      
+      checkWinners(); // Check winners after each number is marked
+
       const fullyMarkedPlayer = players.find(player => {
         const playerTable = document.getElementById(player.playerName);
         return playerTable && playerTable.classList.contains("fully-marked");
       });
 
       if (fullyMarkedPlayer) {
-        showMessage("Jogador completamente marcado: " + fullyMarkedPlayer.playerName);
+        seeWinner("Jogador completamente marcado: " + fullyMarkedPlayer.playerName);
       }
-      
+
       return;
     }
 
     const cell = document.createElement("td");
-    const index = Math.floor(Math.random() * numbers.length);
-    const number = formatNumber(numbers[index]);
+    const index = Math.floor(Math.random() * gameNumbers.length);
+    const number = formatNumber(gameNumbers[index]);
     cell.textContent = number;
-    numbers.splice(index, 1);
+    gameNumbers.splice(index, 1);
 
     const rows = table.getElementsByTagName("tr");
     let currentRow = rows[rows.length - 1];
 
-    if (!currentRow) {
-      currentRow = document.createElement("tr");
-      table.appendChild(currentRow);
-    }
-
-    if (currentRow.children.length === 5) {
+    if (!currentRow || currentRow.children.length === 5) {
       currentRow = document.createElement("tr");
       table.appendChild(currentRow);
     }
@@ -265,12 +267,12 @@ function generateGameTable() {
         }
       }
     });
-  }, 100);
+  }, 50);
 
-  if (numbers.length === 0 || isAnyPlayerFullyMarked()) {
+  if (gameNumbers.length === 0 || isAnyPlayerFullyMarked()) {
     clearInterval(intervalId);
-    checkWinners(); // Verificar os vencedores após cada marcação de número
-    
+    checkWinners(); // Check winners after each number is marked
+
     const fullyMarkedPlayer = players.find(player => {
       const playerTable = document.getElementById(player.playerName);
       return playerTable && playerTable.classList.contains("fully-marked");
@@ -279,14 +281,13 @@ function generateGameTable() {
     if (fullyMarkedPlayer) {
       seeWinner("O Vencedor é: " + fullyMarkedPlayer.playerName);
     }
-    
+
     return;
   }
 
   gameContainer.appendChild(table);
   numbersTable.appendChild(gameContainer);
 }
-
 
 // Function to check if any player has any row fully marked
 function isAnyPlayerFullyMarked() {
@@ -325,7 +326,6 @@ function isAnyPlayerFullyMarked() {
   return anyPlayerFullyMarked;
 }
 
-
 // Function to check if any player has won the game
 function checkWinners() {
   players.forEach((player) => {
@@ -353,24 +353,7 @@ function checkWinners() {
   });
 }
 
-
 // Function to start the game
 function startGame() {
   generateGameTable();
-}
-
-
-function generatenumber(qtd, min, max) {
-  let newnumber = []
-  
-  while (newnumber.length < 5) {
-
-    var newrandom = Math.floor(Math.random() * (max - min)) + min;
-
-    if (!newnumber.includes(newrandom)) {
-        newnumber.push(newrandom)
-    }
-
-} return newnumber;
-
 }

@@ -228,7 +228,7 @@ body {
   }
 
   /* Estilos para números marcados na cartela */
-  .marked {
+.marked {
     text-decoration: line-through;
     background-color:#dddddd;
   }
@@ -241,7 +241,7 @@ body {
 /* Estilos para a mensagem do jogador */
 .message-container {
     position: absolute;
-    bottom: 10px;
+    up: 10px;
     left: 50%;
     transform: translateX(-50%);
     background-color: #e6e6e6;
